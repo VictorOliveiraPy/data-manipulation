@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  go-app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./resources/seed.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_DB=dataloader
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+volumes:
+  postgres_data:
