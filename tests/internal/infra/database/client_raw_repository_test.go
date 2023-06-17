@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func TestCreateClientDataWhenSuccessful(t *testing.T) {
+func TestCreateClientRawDataWhenSuccessful(t *testing.T) {
 	psqlInfo := fmt.Sprintf("host=localhost port=5432 user=postgres password=postgres dbname=dataloader search_path=dataloader_test sslmode=disable")
 	conn, err := pgxpool.Connect(context.Background(), psqlInfo)
 	if err != nil {
@@ -24,19 +24,19 @@ func TestCreateClientDataWhenSuccessful(t *testing.T) {
 	}
 	defer conn.Close()
 
-	clientRepository := database.NewClientRepository(conn)
+	clientRepository := database.NewClientRawRepository(conn)
 
-	clients := []*entity.Client{
+	clients := []*entity.ClientRaw{
 		{
 			ID:                 uuid.New().String(),
 			Document:           "1234567890",
-			IsPrivate:          false,
-			IsIncomplete:       true,
+			IsPrivate:          "0",
+			IsIncomplete:       "0",
 			LastPurchaseDate:   nil,
-			AverageTicket:      19.0,
-			LastPurchaseTicket: 20.9,
-			MostFrequentStore:  "79.379.491/0001-83",
-			LastPurchaseStore:  "79.379.491/0001-83",
+			AverageTicket:      nil,
+			LastPurchaseTicket: nil,
+			MostFrequentStore:  nil,
+			LastPurchaseStore:  nil,
 			Status:             "Active",
 			CreatedAt:          time.Now().Format(time.RFC3339),
 		},
@@ -46,7 +46,7 @@ func TestCreateClientDataWhenSuccessful(t *testing.T) {
 	fmt.Println(err)
 	assert.NoError(t, err)
 
-	query := `TRUNCATE TABLE client_data;`
+	query := `TRUNCATE TABLE raw_client_data;`
 	_, err = conn.Exec(context.Background(), query)
 
 }
