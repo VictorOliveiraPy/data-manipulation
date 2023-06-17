@@ -50,6 +50,5 @@ func (repository *ClientRepository) Create(clients []*entity.Client) error {
 			return fmt.Errorf("error %v", err)
 		}
 	}
-
 	return nil
 }

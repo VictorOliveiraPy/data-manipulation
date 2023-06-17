@@ -38,8 +38,8 @@ func main() {
 
 	clientService := service.NewClientService(clientRawRepository, clientRepository)
 
-	clientService.DataLoader("base.txt")
-	clientService.DataLoaderCleaning(1000, "Waiting")
+	clientService.LoadRawDataFromFile("base_49994.txt")
+	clientService.CleanAndLoadData(1000, "Waiting")
 	elapsed := time.Since(startTime)
 	message := fmt.Sprintf("[Done] exited with code=0 in %s", elapsed)
 	fmt.Println(message)

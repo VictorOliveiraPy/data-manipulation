@@ -33,7 +33,6 @@ func ParseFile(filePath string) ([]*entity.ClientRaw, error) {
 	fileScanner := bufio.NewScanner(file)
 	allClients := make([]*entity.ClientRaw, 0)
 	fileScanner.Scan()
-	count := 0
 
 	for fileScanner.Scan() {
 		line := fileScanner.Text()
@@ -66,7 +65,6 @@ func ParseFile(filePath string) ([]*entity.ClientRaw, error) {
 	if err := fileScanner.Err(); err != nil {
 		return nil, err
 	}
-	count++
 
 	return allClients, nil
 }
@@ -94,7 +92,6 @@ func ParseFloat(value string) (float64, error) {
 	if err != nil {
 		return f, nil
 	}
-
 	return f, nil
 }
 

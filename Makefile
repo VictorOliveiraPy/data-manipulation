@@ -13,7 +13,7 @@ run:
 	-$(DOCKER_COMPOSE) up
 
 up-db:
-	-$(DOCKER_COMPOSE) up --build
+	-$(DOCKER_COMPOSE) up --build -d
 
 stop:
 	@echo "STOPPING CONTAINERS"

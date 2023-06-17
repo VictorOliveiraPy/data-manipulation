@@ -18,7 +18,7 @@ func NewClientService(clientRawRepository entity.ClientRawRepositoryInterface, c
 	}
 }
 
-func (service *ClientService) DataLoader(filePath string) error {
+func (service *ClientService) LoadRawDataFromFile(filePath string) error {
 	allClients, err := parser.ParseFile(filePath)
 	if err != nil {
 		return err
@@ -32,12 +32,11 @@ func (service *ClientService) DataLoader(filePath string) error {
 	return nil
 }
 
-func (service *ClientService) DataLoaderCleaning(limit int, status string) error {
+func (service *ClientService) CleanAndLoadData(limit int, status string) error {
 
 	for {
 		var allClientsClean []*entity.Client
 		result, err := service.clientRawRepository.GetClients(limit, status)
-		fmt.Println(len(result))
 
 		if err != nil {
 			return err
@@ -50,6 +49,10 @@ func (service *ClientService) DataLoaderCleaning(limit int, status string) error
 		if err != nil {
 			return err
 		}
+
+		estimatedSize := len(cleaned) * 2
+		allClientsClean = make([]*entity.Client, 0, estimatedSize)
+
 		allClientsClean = append(allClientsClean, cleaned...)
 
 		err = service.clientRepository.Create(allClientsClean)

@@ -117,6 +117,5 @@ func (repository *ClientRawRepository) UpdateStatusClient(clients []*entity.Clie
 			return err
 		}
 	}
-
 	return nil
 }
