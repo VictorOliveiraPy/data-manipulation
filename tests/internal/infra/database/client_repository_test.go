@@ -6,7 +6,7 @@ import (
 	"github.com/VictorOliveiraPy/internal/entity"
 	"github.com/VictorOliveiraPy/internal/infra/database"
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"testing"
@@ -14,8 +14,7 @@ import (
 )
 
 func TestCreateClientDataWhenSuccessful(t *testing.T) {
-	psqlInfo := fmt.Sprintf("host=localhost port=5432 user=postgres password=postgres dbname=dataloader search_path=dataloader_test sslmode=disable")
-	conn, err := pgxpool.Connect(context.Background(), psqlInfo)
+	conn, err := pgxpool.New(context.Background(), "postgres://postgres:postgres@postgres:5432/dataloader/search_path=dataloader_test")
 	if err != nil {
 		panic(err)
 	}

@@ -1,5 +1,8 @@
-FROM golang:latest
+FROM golang:1.20-alpine
 
-WORKDIR  /app
+ADD . /app
 
-CMD ["tail", "-f", "/dev/null"]
+WORKDIR /app
+
+RUN go get -d -v ./...
+RUN go install -v ./...

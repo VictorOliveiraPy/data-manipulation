@@ -3,21 +3,29 @@ version: '3'
 services:
   go-app:
     build: .
-    ports:
-      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/dataloader
+    command:
+      sh -c "go run main.go"
     volumes:
       - .:/app
+
+
   postgres:
-    image: postgres:latest
-    container_name: postgres
+    image: postgres:alpine
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./resources/seed.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
+      - POSTGRES_HOSTNAME=postgres
       - POSTGRES_DB=dataloader
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    hostname: postgres
+
 volumes:
   postgres_data:

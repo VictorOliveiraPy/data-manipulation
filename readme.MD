@@ -14,26 +14,22 @@ Antes de começar, verifique se você tem os seguintes pré-requisitos instalado
 1. Clone este repositório em sua máquina local:
 
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
+git clone <git@github.com:VictorOliveiraPy/data-manipulation.git>
 cd <NOME_DO_DIRETORIO>
 ```
 
-2. Crie um arquivo `.env` na raiz do projeto e defina as variáveis de ambiente necessárias. Exemplo:
+Para buildar o projeto e executar o aplicativo, siga as etapas abaixo:
 
-```plaintext
-DB_DRIVER=postgres
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=dataloader
-```
-
-3. Construa a imagem do aplicativo e inicie o contêiner do banco de dados:
+Execute o seguinte comando para buildar o projeto:
+```bash
+make build
+````
+Em seguida, execute o comando a seguir para iniciar o aplicativo
 
 ```bash
-make up-db:
-```
+make run
+````
+
 
 ## Execução dos Testes
 
@@ -43,32 +39,6 @@ Para executar os testes, utilize o seguinte comando:
 make test
 ```
 
-
-## Execução do Arquivo Principal (main.go)
-
-Para executar o arquivo principal `main.go`, utilize o seguinte comando:
-
-```bash
-make execute
-```
-
-Isso iniciará a execução do arquivo `main.go`. Certifique-se de que o banco de dados no Docker esteja em execução antes de executar o arquivo principal.
-
-## Parar o banco de dados
-
-Para parar o aplicativo e o banco de dados em execução, utilize o seguinte comando:
-
-```bash
-make stop
-```
-
-## Remover  banco de dados
-
-Para remover completamente o banco de dados, incluindo contêineres e volumes, utilize o seguinte comando:
-
-```bash
-make remove
-```
 ## Estrutura do Banco de Dados
 
 
