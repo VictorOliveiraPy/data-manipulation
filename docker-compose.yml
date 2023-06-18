@@ -2,18 +2,24 @@ version: '3'
 
 services:
   go-app:
+    image: go-app
     build: .
     depends_on:
       - postgres
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/dataloader
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/dataloader
     command:
       sh -c "go run main.go"
     volumes:
       - .:/app
-
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h db -p 5432" ]
+      interval: 5s
+      timeout: 1s
+      retries: 10
 
   postgres:
+    container_name: db
     image: postgres:alpine
     ports:
       - "5432:5432"
@@ -26,6 +32,17 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     hostname: postgres
+
+  test:
+    image: golang:1.20-alpine
+    command: go test  ./...
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      DB_CONN: postgres://postgres:postgres@db:5432/dataloader?search_path=dataloader_test"
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:

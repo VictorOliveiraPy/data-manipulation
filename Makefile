@@ -1,6 +1,6 @@
 DOCKER_COMPOSE=docker-compose
 APP_NAME?=postgres
-DATABASE_TESTS_URL=postgres://postgres:postgres@postgres:5432/dataloader?sslmode=disable
+DATABASE_TESTS_URL=postgres://postgres:postgres@db:5432/dataloader?sslmode=disable
 
 
 .DEFAULT_GOAL := build
@@ -10,8 +10,7 @@ build:
 	-$(DOCKER_COMPOSE) build $(APP_NAME)
 
 build:
-	-$(DOCKER_COMPOSE) build
-
+	-$(DOCKER_COMPOSE) up --build -d
 
 run:
 	-$(DOCKER_COMPOSE) up go-app
@@ -42,5 +41,6 @@ execute:
 	go run cmd/main.go
 
 test:
-	go test ./...
+	-$(DOCKER_COMPOSE) up test
+
 .PHONY:test

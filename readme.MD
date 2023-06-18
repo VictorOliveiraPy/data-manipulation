@@ -37,6 +37,11 @@ Para executar os testes, utilize o seguinte comando:
 make test
 ```
 
+Para remove o container e volume
+```bash
+make remove
+```
+
 ## Estrutura do Banco de Dados
 
 

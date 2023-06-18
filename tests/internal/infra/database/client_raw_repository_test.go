@@ -9,13 +9,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/stretchr/testify/assert"
 	"log"
-	"os"
 	"testing"
 	"time"
 )
 
 func TestCreateClientRawDataWhenSuccessful(t *testing.T) {
-	conn, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL_TEST"))
+	conn, err := pgxpool.New(context.Background(), "postgres://postgres:postgres@db:5432/dataloader?search_path=dataloader_test")
+	println(conn)
 	if err != nil {
 		panic(err)
 	}

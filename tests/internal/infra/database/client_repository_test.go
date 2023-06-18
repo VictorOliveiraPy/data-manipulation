@@ -14,7 +14,7 @@ import (
 )
 
 func TestCreateClientDataWhenSuccessful(t *testing.T) {
-	conn, err := pgxpool.New(context.Background(), "postgres://postgres:postgres@postgres:5432/dataloader/search_path=dataloader_test")
+	conn, err := pgxpool.New(context.Background(), "postgres://postgres:postgres@db:5432/dataloader?search_path=dataloader_test")
 	if err != nil {
 		panic(err)
 	}
