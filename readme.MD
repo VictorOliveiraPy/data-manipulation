@@ -7,8 +7,6 @@ Este arquivo contém instruções para configurar e executar o aplicativo, inclu
 Antes de começar, verifique se você tem os seguintes pré-requisitos instalados em sua máquina:
 
 - Docker: [Instruções de instalação do Docker](https://docs.docker.com/get-docker/)
-- Go: [Instruções de instalação do Go](https://golang.org/doc/install)
-
 ## Configuração e Instalação
 
 1. Clone este repositório em sua máquina local:
