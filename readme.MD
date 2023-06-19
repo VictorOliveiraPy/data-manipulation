@@ -54,3 +54,16 @@ Para lidar com os dados do arquivo TXT, foram criadas duas tabelas no banco de d
 Decidi separar os dados brutos dos dados formatados em tabelas distintas para manter a integridade dos dados inseridos e preservar um registro original dos dados, o que pode ser útil para fins de auditoria. A tabela ```'raw_client_data'``` é responsável por armazenar os dados brutos sem formatação, mantendo um histórico fiel do que foi importado. Isso permite rastrear a origem dos dados e ter uma visão clara dos registros iniciais.
 Por outro lado, a tabela `````'client_data'````` armazena os dados formatados e corrigidos. Essa separação facilita a visualização e o gerenciamento dos dados, pois concentra as informações prontas para consulta e análise. Além disso, a tabela 'client_data' pode ser otimizada especificamente para consultas.
 Essa abordagem também simplifica a manutenção do banco de dados, pois é possível direcionar ações específicas para cada tabela. Por exemplo, é mais fácil executar processos de limpeza e transformação de dados na tabela 'raw_client_data' sem interferir nos dados já formatados e prontos para uso na tabela ```'client_data'```.
+
+## Fluxo do Sistema
+O sistema segue os seguintes passos para processar os dados:
+
+Iniciar o serviço: Para começar, você precisa iniciar o serviço fornecendo os arquivos de dados que serão importados e o limite de valores a serem processados.
+
+Bulk Insert: O sistema realizará um "bulk insert" de todos os dados contidos no arquivo fornecido. Os dados serão inseridos em uma tabela de armazenamento com o status definido como "waiting" (aguardando processamento).
+
+Busca por dados com status "waiting": Em seguida, o sistema fará uma busca na tabela de armazenamento para recuperar todos os dados com o status "waiting".
+
+Parse e Limpeza: O sistema realizará o parse dos dados recuperados, executando a limpeza e formatação necessárias para garantir que eles estejam no formato correto. Essa etapa incluirá a verificação de erros e a normalização dos dados, conforme necessário.
+
+Atualização do status: Após a limpeza e formatação dos dados, o sistema atualizará o status desses dados na tabela de armazenamento para "concluído". Isso indica que esses dados foram processados com sucesso.
