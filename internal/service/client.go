@@ -19,12 +19,15 @@ func NewClientService(clientRawRepository entity.ClientRawRepositoryInterface, c
 }
 
 func (service *ClientService) LoadRawDataFromFile(filePath string) error {
+
 	allClients, err := parser.ParseFile(filePath)
 	if err != nil {
 		return err
 	}
+	allClientToAdd := make([]*entity.ClientRaw, 0, 1000)
 
-	err = service.clientRawRepository.Create(allClients)
+	allClientToAdd = append(allClientToAdd, allClients...)
+	err = service.clientRawRepository.Create(allClientToAdd)
 	if err != nil {
 		return err
 	}
@@ -33,7 +36,6 @@ func (service *ClientService) LoadRawDataFromFile(filePath string) error {
 }
 
 func (service *ClientService) CleanAndLoadData(limit int, status string) error {
-
 	for {
 		var allClientsClean []*entity.Client
 		result, err := service.clientRawRepository.GetClients(limit, status)
